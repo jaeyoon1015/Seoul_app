@@ -65,8 +65,8 @@ public class searchActivity extends Fragment {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent){
-             sAge="ALL";
-         }
+                sAge="ALL";
+            }
         });
 
 
@@ -161,7 +161,7 @@ public class searchActivity extends Fragment {
                 } else {
                     option2 = "&charTrgterArray=" + sTarget;
                 }
-                 if(sTypeObs.equals("NULL")) {
+                if(sTypeObs.equals("NULL")) {
                     option3 = "";
                 } else {
                     option3 = "&obstKiArray=" + sTypeObs;

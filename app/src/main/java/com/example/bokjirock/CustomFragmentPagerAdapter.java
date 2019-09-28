@@ -1,6 +1,9 @@
 package com.example.bokjirock;
 
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -38,6 +41,13 @@ public class CustomFragmentPagerAdapter extends FragmentStatePagerAdapter {
                     return null;
         }
     }
+
+    @Nullable
+    @Override
+    public Parcelable saveState() {
+            return null;
+    }
+
 
     @Override
     public int getItemPosition(@NonNull Object object) {

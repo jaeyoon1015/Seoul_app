@@ -28,55 +28,11 @@ public class HomeActivity extends Fragment {
     private ViewPager tabViewPager; //tab이 들어갈 view pager
     private CustomFragmentPagerAdapter pagerAdapter;
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Log.i("cycle", "onAttach");
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.i("cycle", "onCreate");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-//        actionBar.setDisplayShowTitleEnabled(false); //액션바 노출 유무
-        Log.i("cycle", "onPause");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.i("cycle", "onStop");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.i("cycle", "onDestroyView");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i("cycle", "onDestroy");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.i("cycle", "onDetach");
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_home, container, false);
-//        setContentView(R.layout.activity_main);
-        Log.i("cycle", "onCreateView");
+
 
         tabViewPager = view.findViewById(R.id.pager);    //스와이프할 뷰페이지를 정의
         pagerAdapter = new CustomFragmentPagerAdapter(
@@ -136,7 +92,6 @@ public class HomeActivity extends Fragment {
     }
 
     private void refresh() {
-        Log.e("확인1", "탭1");
         pagerAdapter.notifyDataSetChanged();
         return;
     }

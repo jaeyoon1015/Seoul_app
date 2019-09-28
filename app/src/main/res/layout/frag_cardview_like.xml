@@ -25,19 +25,17 @@
 
             <TextView
                 android:id="@+id/tv_policyname"
-                android:layout_width="0dip"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="7.7"
                 android:textSize="16dp" />
 
             <ImageButton
-                android:layout_width="0dip"
-                android:layout_weight="0.8"
-                android:layout_height="20dp"
-                android:scaleType="fitXY"
-                android:background="@drawable/scrap_button"
                 android:id="@+id/ib_deletebtn"
-                />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/ic_delete"
+                android:scaleType="fitXY" />
 
         </LinearLayout>
 

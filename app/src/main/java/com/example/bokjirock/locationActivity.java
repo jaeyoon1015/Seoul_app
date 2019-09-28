@@ -6,12 +6,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,32 +40,40 @@ import com.example.bokjirock.LocationSearch.Searcher;
 import java.util.HashMap;
 import java.util.List;
 
-public class locationActivity extends Fragment implements MapReverseGeoCoder.ReverseGeoCodingResultListener,
-        MapView.CurrentLocationEventListener,MapView.MapViewEventListener,
+public class locationActivity extends Fragment implements
+        MapView.MapViewEventListener,
         MapView.POIItemEventListener {
     private static final String LOG_TAG = "MainActivity";
+    View view;
     private MapView mapView;
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
 
-    MapPoint.GeoCoordinate mapPointGeo;
-
     private HashMap<Integer, PlaceItem> mTagItemMap = new HashMap<Integer, PlaceItem>();
 
     private Button nursinghomeSearchBtn;
+    private Button search_btn2;
+    private TextView placeurlTextView;
+    private TextView phoneTextView;
+
+    LinearLayout detailLayout;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_location, container, false);
+        view = inflater.inflate(R.layout.activity_location, container, false);
 
         nursinghomeSearchBtn = view.findViewById(R.id.search_nursinghome);
+        search_btn2 = view.findViewById(R.id.search_btn2);
         mapView = view.findViewById(R.id.map_view);
+        detailLayout = view.findViewById(R.id.place_detail);
+        placeurlTextView = view.findViewById(R.id.place_url);
+        phoneTextView = view.findViewById(R.id.phone);
 
         mapView.setMapViewEventListener(this);
-        mapView.setCurrentLocationEventListener(this);
-//        mapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());  //마커 선택했을 때, 나오는 커스텀 마커말풍선
+        mapView.setPOIItemEventListener(this);
 
         //위치 허용 체크
         if (!checkLocationServicesStatus())
@@ -70,9 +81,26 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
         else
             checkRunTimePermission();
 
-        mapView.setPOIItemEventListener(this);
 
         nursinghomeSearchBtn.setOnClickListener(searchbtnClickListener);
+        search_btn2.setOnClickListener(searchbtnClickListener);
+        placeurlTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+
+                intent.setData(Uri.parse(placeurlTextView.getText().toString()));
+                startActivity(intent);
+            }
+        });
+        phoneTextView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:"+phoneTextView.getText().toString())));
+            }
+        });
+
         return view;
     }
 
@@ -83,17 +111,6 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
         mapView.setShowCurrentLocationMarker(false);
         mapView.removeAllPOIItems();
     }
-    //현재 위치 가져오기 MapReverseGeoCoder.ReverseGeoCodingResultListener 주소를 찾았을 때
-    @Override
-    public void onReverseGeoCoderFoundAddress(MapReverseGeoCoder mapReverseGeoCoder, String s) {    //성공
-        mapReverseGeoCoder.toString();
-    }
-
-    @Override
-    public void onReverseGeoCoderFailedToFindAddress(MapReverseGeoCoder mapReverseGeoCoder) {   //실패
-
-    }
-
 
     /*
      * ActivityCompat.requestPermissions를 사용한 퍼미션 요청의 결과를 리턴받는 메소드입니다.
@@ -120,7 +137,6 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
             }
 
             if ( check_result ) {
-                Log.d("@@@", "start");
                 //위치 값을 가져올 수 있음
                 mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
             }
@@ -157,7 +173,7 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
 
 
             // 3.  위치 값을 가져올 수 있음
-            mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+            mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
 
         } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
@@ -211,7 +227,6 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         switch (requestCode) {
 
             case GPS_ENABLE_REQUEST_CODE:
@@ -237,29 +252,6 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    //MapView.CurrentLocationEventListener 오버라이드 메소드
-    @Override
-    public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
-        mapPointGeo = currentLocation.getMapPointGeoCoord();
-        Log.i(LOG_TAG, String.format("MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)", mapPointGeo.latitude, mapPointGeo.longitude, accuracyInMeters));
-    }
-
-    @Override
-    public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
-
-    }
-
-    @Override
-    public void onCurrentLocationUpdateFailed(MapView mapView) {
-
-    }
-
-    @Override
-    public void onCurrentLocationUpdateCancelled(MapView mapView) {
-
-    }
-
-
     /*
     키워드 검색
      */
@@ -277,6 +269,9 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
     Button.OnClickListener searchbtnClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if(detailLayout.getVisibility()==View.VISIBLE)
+                detailLayout.setVisibility(View.GONE);
+
             MapPoint.GeoCoordinate geoCoordinate = mapView.getMapCenterPoint().getMapPointGeoCoord();
             final double latitude = geoCoordinate.latitude; // 위도
             final double longitude = geoCoordinate.longitude; // 경도
@@ -284,7 +279,6 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
             final int page = 1; // 페이지 번호 (1 ~ 3). 한페이지에 15개
             Searcher searcher = new Searcher();
             final String apikey = searcher.key_kakao;
-            Log.i("start", "btnClickListener");
             String keyword;
             switch (view.getId()) {
                 case R.id.search_nursinghome:
@@ -303,16 +297,16 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
     //마커찍기
     private void showResult(List<PlaceItem> placeitemList) {
         MapPointBounds mapPointBounds = new MapPointBounds();
-        Log.i("start", "showResult");
+
+        if(mTagItemMap.size() != 0)
+            mTagItemMap.clear();
         for (int i = 0; i < placeitemList.size(); i++) {
 
             PlaceItem item = placeitemList.get(i);
-
-            Log.i("start", "showResult : "+item.place_name+ " x: "+item.x+" y: "+item.y);
             MapPOIItem marker = new MapPOIItem();
 
             marker.setTag(i);
-            marker.setItemName(item.place_name+", "+item.distance);
+            marker.setItemName(item.place_name);
             MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(item.y, item.x);
             marker.setMapPoint(mapPoint);
             marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
@@ -322,47 +316,19 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
             mTagItemMap.put(marker.getTag(), item);
 
         }
-
         mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds));
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving);
-        MapPOIItem[] poiItems = mapView.getPOIItems();
-        if (poiItems.length > 0) {
-            mapView.selectPOIItem(poiItems[0], false);    //특정 POI Item 을 선택한다. 선택된 POI Item은 Callout Balloon(말풍선)이 아이콘(마커)위에 나타난다.
-        }
-    }
-
-    class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter {
-
-        private final View mCalloutBalloon;
-
-    	public CustomCalloutBalloonAdapter() {
-            mCalloutBalloon = getLayoutInflater().inflate(R.layout.policy_detail, null);    //임시로 policy_detail, 나중에 새로운 커스텀 layout으로 바꿀것!
-        }
-
-        @Override
-        public View getCalloutBalloon(MapPOIItem poiItem) {
-            if (poiItem == null) return null;
-            PlaceItem item = mTagItemMap.get(poiItem.getTag());
-            if (item == null) return null;
-//            ImageView imageViewBadge = (ImageView) mCalloutBalloon.findViewById(R.id.badge);
-//            TextView textViewTitle = (TextView) mCalloutBalloon.findViewById(R.id.title);
-//            textViewTitle.setText(item.title);
-//            TextView textViewDesc = (TextView) mCalloutBalloon.findViewById(R.id.desc);
-//            textViewDesc.setText(item.address);
-//            imageViewBadge.setImageDrawable(createDrawableFromUrl(item.imageUrl));
-            return mCalloutBalloon;
-        }
-
-        @Override
-        public View getPressedCalloutBalloon(MapPOIItem poiItem) {
-            return null;
-        }
 
     }
+
     //MapView.POIItemEventListener 오버라이딩 메소드
     @Override
     public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
-
+         detailLayout.setVisibility(View.VISIBLE);
+        ((TextView)view.findViewById(R.id.place_name)).setText(mTagItemMap.get(mapPOIItem.getTag()).place_name);
+        ((TextView)view.findViewById(R.id.address_road)).setText(mTagItemMap.get(mapPOIItem.getTag()).address_name);
+        ((TextView)view.findViewById(R.id.phone)).setText(mTagItemMap.get(mapPOIItem.getTag()).phone);
+        ((TextView)view.findViewById(R.id.place_url)).setText(mTagItemMap.get(mapPOIItem.getTag()).place_url);
     }
 
     @Override
@@ -384,7 +350,7 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
     @Override
     public void onMapViewInitialized(MapView mapView) {
         ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
     }
 
     @Override
@@ -399,7 +365,7 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
 
     @Override
     public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
-
+        detailLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -425,5 +391,7 @@ public class locationActivity extends Fragment implements MapReverseGeoCoder.Rev
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
 
     }
+
+
 
 }

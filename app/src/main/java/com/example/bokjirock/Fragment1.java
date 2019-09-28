@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-
 public class Fragment1 extends Fragment {
 
     private String queryUrl = "http://www.bokjiro.go.kr/openapi/rest/gvmtWelSvc?crtiKey=rdw30zhS7kTarAscsrFuTMFxGC4RKeLM69MkiAIKH9nQaTXRYtU%2FQqG3ZHQqLS4iaPvMUBPte4%2FMSApoW6j6eQ%3D%3D&callTp=L&pageNum=1&numOfRows=50";
@@ -79,6 +78,7 @@ public class Fragment1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
+
         View view = inflater.inflate(R.layout.fragment1, container, false);
         LayoutManager1 = new LinearLayoutManager(view.getContext());
         recyclerView1 = view.findViewById(R.id.recycle_view1);
@@ -96,6 +96,7 @@ public class Fragment1 extends Fragment {
 
     @Override
     public void onStop() {
+
         if (apiThread != null) {
             if (apiThread.isAlive()) {
                 apiThread.interrupt();
@@ -124,10 +125,8 @@ public class Fragment1 extends Fragment {
 
                     XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                     XmlPullParser xpars = factory.newPullParser();
-                    Log.e("아아","22");
                     try {
-                        xpars.setInput(new InputStreamReader(ins, "UTF-8"));    //?명뭼由щ뜑濡??뚯떛???댁슜 ?ｊ린
-                        Log.e("아아","33");
+                        xpars.setInput(new InputStreamReader(ins, "UTF-8"));
                     } catch (XmlPullParserException e) {
                         e.printStackTrace();
                     }
@@ -197,7 +196,6 @@ public class Fragment1 extends Fragment {
         });
         for(int i=0;i<policyInputArrayList.size();i++) {
             String ServDgst = policyInputArrayList.get(i).getServDgst().replaceAll("[<>br/]", "");
-            Log.e("여기11",ServDgst);
             policyInfoArrayList.add(new policyInfo(policyInputArrayList.get(i).getServNm(), ServDgst, "0", "0", policyInputArrayList.get(i).getServId()));
         }
     }
