@@ -50,7 +50,8 @@ public class myAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     if (pos != RecyclerView.NO_POSITION) {
                         Log.e("확인",policyInfoArrayList.get(pos).getpTitle());
                         if(!helper.isExist(policyInfoArrayList.get(pos).getId())) {
-                            scrap_button.setBackgroundResource(R.drawable.scrap_star);
+                            Drawable scrapstar = ResourcesCompat.getDrawable(context.getResources(), R.drawable.scrap_star, null);
+                            scrap_button.setBackground(scrapstar);
                             helper.insert(policyInfoArrayList.get(pos).getId(), policyInfoArrayList.get(pos).getpTitle(), policyInfoArrayList.get(pos).getpContent());
                             Toast.makeText(context, "관심정책에 추가하셨습니다.", Toast.LENGTH_SHORT).show();
                         }

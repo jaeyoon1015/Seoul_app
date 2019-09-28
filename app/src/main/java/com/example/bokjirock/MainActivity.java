@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     //Page에 대한 Activity 선언
     private HomeActivity fragmentHome = new HomeActivity();
     private searchHomeActivity fragmentSearchHome=new searchHomeActivity();
-    private searchActivity fragmentSearch = new searchActivity();
     private categoryActivity fragmentCategory = new categoryActivity();
     private locationActivity fragmentLocation = new locationActivity();
 
