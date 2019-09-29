@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/selectLayout"
+        android:id="@+id/place_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="2dp"
