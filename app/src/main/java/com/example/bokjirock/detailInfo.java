@@ -59,7 +59,7 @@ public class detailInfo extends Activity {
                     break;
                 case 102:
                     //오류
-                    Toast.makeText(getApplicationContext(), (String) message.obj, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "인터넷 연결이 불안정합니다. API오류" , Toast.LENGTH_SHORT).show();
                     break;
             }
             return true;

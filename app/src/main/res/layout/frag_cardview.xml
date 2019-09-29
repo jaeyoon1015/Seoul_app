@@ -32,9 +32,9 @@
 
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitCenter"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:scaleType="fitXY"
                 android:background="@drawable/scrap_button"
                 android:id="@+id/ib_scrapbutton"
                 />

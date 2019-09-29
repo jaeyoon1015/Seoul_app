@@ -216,9 +216,6 @@ public class searchActivity extends Fragment {
                 intent.putExtra("query", query);
                 Log.e("query",query);
                 startActivity(intent);
-
-                getActivity().finish();
-
             }
         });
 

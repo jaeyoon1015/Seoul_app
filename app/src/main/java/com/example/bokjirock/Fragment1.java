@@ -54,7 +54,7 @@ public class Fragment1 extends Fragment {
                     break;
                 case 102:
                     //오류
-                    Toast.makeText(getContext(), (String) message.obj, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"인터넷 연결이 불안정합니다. API오류", Toast.LENGTH_SHORT).show();
                     break;
             }
             return true;
