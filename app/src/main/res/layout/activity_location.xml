@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <net.daum.mf.map.api.MapView
         android:id="@+id/map_view"
@@ -35,17 +35,77 @@
             android:background="@drawable/button_round2"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/place_detail"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:padding="10dp"
         android:layout_margin="10dp"
         android:background="@drawable/search_button_green"
         android:layout_gravity="bottom"
-        android:orientation="vertical"
         android:visibility="gone"
         >
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ver01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".02"
+            app:layout_constraintGuide_begin="100dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ver02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".98"
+            app:layout_constraintGuide_begin="100dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ver03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".30"
+            app:layout_constraintGuide_begin="100dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ho01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".00"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ho02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".30"
+            />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ho03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".52"
+            />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ho04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".74"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ho05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".96"
+            />
 
         <TextView
             android:id="@+id/place_name"
@@ -55,14 +115,49 @@
             android:padding="3dp"
             android:textSize="17dp"
             android:textColor="#000000"
+            android:background="@drawable/search_button_green"
+            app:layout_constraintLeft_toRightOf="@+id/ver01"
+            app:layout_constraintRight_toLeftOf="@id/ver02"
+            app:layout_constraintTop_toBottomOf="@+id/ho01"
+            app:layout_constraintBottom_toTopOf="@+id/ho02"
             />
 
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="주소"
+            android:textAlignment="center"
+            android:id="@+id/road"
+            android:background="@drawable/search_button_green"
+            app:layout_constraintLeft_toRightOf="@+id/ver01"
+            app:layout_constraintRight_toLeftOf="@id/ver03"
+            app:layout_constraintTop_toBottomOf="@+id/ho02"
+            app:layout_constraintBottom_toTopOf="@+id/ho03"
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/address_road"
             android:layout_margin="5dp"
             android:padding="3dp"
+            app:layout_constraintLeft_toRightOf="@+id/road"
+            app:layout_constraintRight_toLeftOf="@id/ver02"
+            app:layout_constraintTop_toBottomOf="@+id/ho01"
+            app:layout_constraintBottom_toTopOf="@+id/ho02"
+            />
+
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="전화번호"
+            android:textAlignment="center"
+            android:id="@+id/tel"
+            android:background="@drawable/search_button_green"
+            app:layout_constraintLeft_toRightOf="@+id/ver01"
+            app:layout_constraintRight_toLeftOf="@id/ver03"
+            app:layout_constraintTop_toBottomOf="@+id/ho03"
+            app:layout_constraintBottom_toTopOf="@+id/ho04"
             />
 
         <TextView
@@ -72,6 +167,23 @@
             android:layout_margin="5dp"
             android:padding="3dp"
             android:textColor="@color/design_default_color_primary"
+            app:layout_constraintLeft_toRightOf="@+id/ver01"
+            app:layout_constraintRight_toLeftOf="@id/ver02"
+            app:layout_constraintTop_toBottomOf="@+id/ho03"
+            app:layout_constraintBottom_toTopOf="@+id/ho04"
+            />
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="링크"
+            android:textAlignment="center"
+            android:id="@+id/link"
+            android:background="@drawable/search_button_green"
+            app:layout_constraintLeft_toRightOf="@+id/ver01"
+            app:layout_constraintRight_toLeftOf="@id/ver03"
+            app:layout_constraintTop_toBottomOf="@+id/ho04"
+            app:layout_constraintBottom_toTopOf="@+id/ho05"
             />
 
         <TextView
@@ -81,10 +193,12 @@
             android:layout_margin="5dp"
             android:padding="3dp"
             android:textColor="@color/design_default_color_primary"
+            app:layout_constraintLeft_toRightOf="@+id/ver01"
+            app:layout_constraintRight_toLeftOf="@id/ver02"
+            app:layout_constraintTop_toBottomOf="@+id/ho04"
+            app:layout_constraintBottom_toTopOf="@+id/ho05"
             />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-    </LinearLayout>
 
 </FrameLayout>
