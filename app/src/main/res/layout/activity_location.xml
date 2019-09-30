@@ -36,8 +36,9 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/place_detail"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="300dp"
         android:padding="10dp"
         android:layout_margin="10dp"
         android:background="@drawable/search_button_green"
@@ -51,7 +52,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent=".02"
-            app:layout_constraintGuide_begin="100dp" />
+            />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/ver02"
@@ -59,7 +60,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent=".98"
-            app:layout_constraintGuide_begin="100dp" />
+            />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/ver03"
@@ -67,7 +68,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent=".30"
-            app:layout_constraintGuide_begin="100dp" />
+            />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/ho01"
@@ -135,15 +136,15 @@
             app:layout_constraintBottom_toTopOf="@+id/ho03"
             />
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/address_road"
             android:layout_margin="5dp"
             android:padding="3dp"
-            app:layout_constraintLeft_toRightOf="@+id/road"
+            app:layout_constraintLeft_toRightOf="@+id/ver03"
             app:layout_constraintRight_toLeftOf="@id/ver02"
-            app:layout_constraintTop_toBottomOf="@+id/ho01"
-            app:layout_constraintBottom_toTopOf="@+id/ho02"
+            app:layout_constraintTop_toBottomOf="@+id/ho02"
+            app:layout_constraintBottom_toTopOf="@+id/ho03"
             />
 
 
@@ -161,13 +162,13 @@
             />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/phone"
             android:layout_margin="5dp"
             android:padding="3dp"
             android:textColor="@color/design_default_color_primary"
-            app:layout_constraintLeft_toRightOf="@+id/ver01"
+            app:layout_constraintLeft_toRightOf="@+id/ver03"
             app:layout_constraintRight_toLeftOf="@id/ver02"
             app:layout_constraintTop_toBottomOf="@+id/ho03"
             app:layout_constraintBottom_toTopOf="@+id/ho04"
@@ -187,13 +188,13 @@
             />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/place_url"
             android:layout_margin="5dp"
             android:padding="3dp"
             android:textColor="@color/design_default_color_primary"
-            app:layout_constraintLeft_toRightOf="@+id/ver01"
+            app:layout_constraintLeft_toRightOf="@+id/ver03"
             app:layout_constraintRight_toLeftOf="@id/ver02"
             app:layout_constraintTop_toBottomOf="@+id/ho04"
             app:layout_constraintBottom_toTopOf="@+id/ho05"
