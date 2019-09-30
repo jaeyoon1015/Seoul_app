@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -58,7 +59,7 @@ public class locationActivity extends Fragment implements
     private TextView placeurlTextView;
     private TextView phoneTextView;
 
-    LinearLayout detailLayout;
+    ConstraintLayout detailLayout;
 
     @Nullable
     @Override
@@ -324,7 +325,7 @@ public class locationActivity extends Fragment implements
     //MapView.POIItemEventListener 오버라이딩 메소드
     @Override
     public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
-         detailLayout.setVisibility(View.VISIBLE);
+        detailLayout.setVisibility(View.VISIBLE);
         ((TextView)view.findViewById(R.id.place_name)).setText(mTagItemMap.get(mapPOIItem.getTag()).place_name);
         ((TextView)view.findViewById(R.id.address_road)).setText(mTagItemMap.get(mapPOIItem.getTag()).address_name);
         ((TextView)view.findViewById(R.id.phone)).setText(mTagItemMap.get(mapPOIItem.getTag()).phone);
